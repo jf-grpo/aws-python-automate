@@ -1,2 +1,4 @@
 # aws-python-automate
-Study aws automation with python
+
+Repository for the acloud guru course *Automating AWS with Python*
+
