@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
+"""Classes for S3 Buckets."""
+
 from pathlib import Path
 import mimetypes
 from botocore.exceptions import ClientError
 
-"""Classes for S3 Buckets."""
+import util
 
 
 class BucketManager:
@@ -15,6 +17,17 @@ class BucketManager:
         self.session = session
         self.s3 = self.session.resource('s3')
 
+    def get_region_name(self, bucket):
+        """Get the bucket's region name."""
+        bucket_location = self.s3.meta.client.get_bucket_location(Bucket=bucket.name)
+
+        return bucket_location["LocationConstraint"] or 'us-east-1'
+
+    def get_bucket_url(self, bucket):
+        """Get the website URL for this bucket."""
+        return "https://{}.{}".format(bucket.name,
+            util.get_endpoint(self.get_region_name(bucket)).host)
+        
     def all_buckets(self):
         """Get an iterator for all buckets."""
         return self.s3.buckets.all()
