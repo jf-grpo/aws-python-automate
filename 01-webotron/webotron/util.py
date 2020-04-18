@@ -1,3 +1,5 @@
+"""Utilities for webotron"""
+
 from collections import namedtuple
 
 Endpoint = namedtuple('Endpoint', ['name', 'host', 'zone'])
@@ -57,9 +59,11 @@ region_to_endpoint = {
         's3-website-sa-east-1.amazonaws.com', 'Z7KQH4QJS55SO'),
 }
 
+
 def known_region(region):
-	"""Returns true if this is a known region."""
+    """Returns true if this is a known region."""
 	return region in region_to_endpoint
+
 
 def get_endpoint(region):
 	"""Get the s3 website hosting endpoint for this region."""
